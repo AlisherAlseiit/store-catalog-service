@@ -2,7 +2,7 @@
 
 
 ## store-information-service: https://github.com/Alishergit/store-information-service.git
-## store-rating-service:
+## store-rating-service: https://github.com/L-Law-Liet/store-rating
 ## store-profile-service: https://github.com/vmiinv/profile.git
 ## store-cart-service: https://github.com/vmiinv/cart.git
 ## store-comments-service: 
