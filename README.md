@@ -20,3 +20,6 @@
 ## The system architecture
 
 ![untitled](https://user-images.githubusercontent.com/63951641/136783404-5d312b95-03e7-41f7-a6a2-0d1ac40125d2.png)
+
+## Report
+https://docs.google.com/document/d/1kNR4Bf-m4pR7eVS6k_sA5aStDWXAidIu4AUp81vWHbQ/edit?usp=sharing
