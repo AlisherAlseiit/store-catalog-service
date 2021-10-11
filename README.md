@@ -16,3 +16,7 @@
 
 ![eureka published microservices](https://user-images.githubusercontent.com/63951641/135662067-29fb0e91-f335-48da-aac7-5c9d89d798c2.PNG)
 
+
+## The system architecture
+
+![untitled](https://user-images.githubusercontent.com/63951641/136783404-5d312b95-03e7-41f7-a6a2-0d1ac40125d2.png)
