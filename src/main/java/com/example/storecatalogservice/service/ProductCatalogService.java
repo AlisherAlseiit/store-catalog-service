@@ -24,7 +24,7 @@ public class ProductCatalogService {
             Rating rating = restTemplate.getForObject("http://store-rating-service/ratings/" + productId, Rating.class);
 
 
-        return new Catalog(product.getTitle(), rating.getRating());
+        return new Catalog(product.getTitle(), product.getDescription(), product.getPrice(), rating.getRating(), product.getImageURL());
 
     }
 

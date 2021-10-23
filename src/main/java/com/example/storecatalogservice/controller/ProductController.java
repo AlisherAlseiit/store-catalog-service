@@ -1,6 +1,6 @@
 package com.example.storecatalogservice.controller;
 
-import com.example.storecatalogservice.model.User;
+
 import com.example.storecatalogservice.service.ProductCatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.xml.ws.Response;
 
 @RestController
 @RequestMapping("/catalog")
