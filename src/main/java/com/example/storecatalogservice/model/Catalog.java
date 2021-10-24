@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Catalog {
 
-
+    private Long id;
     private String title;
     private String description;
     private Double price;
-    private double rating;
+    private Double rating;
     private String imageURL;
 
 
