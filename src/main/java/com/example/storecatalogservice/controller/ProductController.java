@@ -21,7 +21,7 @@ public class ProductController {
 
     @GetMapping()
     private ResponseEntity<?> getProducts() {
-        return  ResponseEntity.ok(service.getProducts());
+        return  ResponseEntity.ok(Collections.singletonList(service.getProducts()));
     }
 
     @GetMapping("/{productId}")

@@ -2,6 +2,7 @@ package com.example.storecatalogservice.service;
 
 import com.example.storecatalogservice.model.*;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -10,8 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.sql.PreparedStatement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -26,6 +29,25 @@ public class ProductCatalogService {
     @Autowired
     ProductRatingInfo productRatingInfo;
 
+    @Autowired
+    ProductListRating productListRating;
+
+    @Autowired
+    UserCommentItem userCommenttItem;
+
+    @Autowired
+    UserCartItem userCartItem;
+
+    @Autowired
+    UserItem userItem;
+
+    @Autowired
+    UserRatingItem userRatingItem;
+
+    @Autowired
+    ProductList productList;
+
+
     public Catalog getProduct(Long productId) {
         List<Product> productList = new ArrayList<>();
         List<Catalog> catalogList = new ArrayList<>();
@@ -39,30 +61,15 @@ public class ProductCatalogService {
 
 
 
-
-
-
-    public Catalog getProductInformationByIdFallback(Long productId) {
-        return new Catalog(1L, "no title", "no description", 0.0, 0.0, "no imageURL");
-    }
-
-    @HystrixCommand(fallbackMethod = "getFallbackProducts")
     public List<Catalog> getProducts() {
         List<Catalog> catalogList = new ArrayList<>();
         List<Rating> ratingsList = new ArrayList<>();
         List<Product> produtcts = new ArrayList<>();
 
 
+        ResponseEntity<List<Rating>> rateResponse = productListRating.getListRating();
 
-        ResponseEntity<List<Rating>> rateResponse =
-                restTemplate.exchange("http://store-rating-service/ratings/",
-                        HttpMethod.GET, null, new ParameterizedTypeReference<List<Rating>>() {
-                        });
-
-        ResponseEntity<List<Product>> productResponse =
-                restTemplate.exchange("http://store-information-service/products/",
-                        HttpMethod.GET, null, new ParameterizedTypeReference<List<Product>>() {
-                        });
+        ResponseEntity<List<Product>> productResponse = productList.getListProduct();
 
         ratingsList = rateResponse.getBody();
         produtcts = productResponse.getBody();
@@ -82,16 +89,16 @@ public class ProductCatalogService {
 
 
 
-    @HystrixCommand(fallbackMethod = "getFallbackUserData")
+
     public User getUserData(Long userId) {
 
-        UserRating ratings = restTemplate.getForObject("http://store-rating-service/ratings/users/" + userId, UserRating.class);
+        UserRating ratings = userRatingItem.getUserRatingItem(userId);
 
-        User user = restTemplate.getForObject("http://store-profile-service/profile/" + userId, User.class);
+        User user = userItem.getUserItem(userId);
 
-        UserCart cart = restTemplate.getForObject("http://store-cart-service/cart/" + userId, UserCart.class);
+        UserCart cart = userCartItem.getUserCartItem(userId);
 
-        UserComment userComment = restTemplate.getForObject("http://store-comment-service/comments/" + userId, UserComment.class);
+        UserComment userComment = userCommenttItem.getUserCommentItem(userId);
 
 
         user.setCartList(cart);
@@ -100,4 +107,12 @@ public class ProductCatalogService {
 
         return user;
     }
+
+
+
+
+
+
+
+
 }
