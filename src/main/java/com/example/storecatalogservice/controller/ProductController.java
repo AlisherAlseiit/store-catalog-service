@@ -27,7 +27,7 @@ public class ProductController {
     @GetMapping("/{productId}")
     private ResponseEntity<?> getProduct(@PathVariable("productId") Long productId) {
 //        Collections.singletonList(service.getProductById(productId));
-        return  ResponseEntity.ok(Collections.singletonList(service.getProductById(productId)));
+        return  ResponseEntity.ok(Collections.singletonList(service.getProduct(productId)));
     }
 
 

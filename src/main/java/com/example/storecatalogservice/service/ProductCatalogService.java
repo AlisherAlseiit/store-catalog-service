@@ -1,6 +1,7 @@
 package com.example.storecatalogservice.service;
 
 import com.example.storecatalogservice.model.*;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -19,20 +20,33 @@ public class ProductCatalogService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public Catalog getProductById(Long productId) {
+    @Autowired
+    ProductInfo productInfo;
+
+    @Autowired
+    ProductRatingInfo productRatingInfo;
+
+    public Catalog getProduct(Long productId) {
         List<Product> productList = new ArrayList<>();
         List<Catalog> catalogList = new ArrayList<>();
 
-            Product product = restTemplate.getForObject("http://store-information-service/products/" + productId, Product.class);
-            Rating rating = restTemplate.getForObject("http://store-rating-service/ratings/" + productId, Rating.class);
-
-
-
+        Product product = productInfo.getProductItem(productId);
+        Rating rating = productRatingInfo.getRating(productId);
 
         return new Catalog(product.getId(),product.getTitle(), product.getDescription(), product.getPrice(), rating.getRating(), product.getImageURL());
 
     }
 
+
+
+
+
+
+    public Catalog getProductInformationByIdFallback(Long productId) {
+        return new Catalog(1L, "no title", "no description", 0.0, 0.0, "no imageURL");
+    }
+
+    @HystrixCommand(fallbackMethod = "getFallbackProducts")
     public List<Catalog> getProducts() {
         List<Catalog> catalogList = new ArrayList<>();
         List<Rating> ratingsList = new ArrayList<>();
@@ -63,39 +77,12 @@ public class ProductCatalogService {
                     product.getImageURL()));
         }
 
-
-
-//        if (!ratings.getRatings().isEmpty()) {
-//            ratingsList = ratings.getRatings();
-//            System.out.println("");
-//        } else {
-//            System.out.println("Error because of nil");
-//        }
-
-//        assert products != null;
-//        assert ratings != null;
-//        for (Product prod : products.getProducts()) {
-//            for (Rating rati : ratings.getRatings()) {
-//
-//                ratingsList.add( new Rating(rati.getProduct_id(), rati.getRating()));
-//
-//
-//                while (prod.getId().equals(rati.getProduct_id())) {
-//
-//                    catalogList.add(new Catalog(prod.getId(),
-//                            prod.getTitle(),
-//                            prod.getDescription(),
-//                            prod.getPrice(),
-//                            rati.getRating(),
-//                            prod.getImageURL()));
-//                }
-//            }
-//        }
-
         return catalogList;
     }
 
 
+
+    @HystrixCommand(fallbackMethod = "getFallbackUserData")
     public User getUserData(Long userId) {
 
         UserRating ratings = restTemplate.getForObject("http://store-rating-service/ratings/users/" + userId, UserRating.class);
