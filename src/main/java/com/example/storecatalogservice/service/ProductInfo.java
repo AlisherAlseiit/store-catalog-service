@@ -2,6 +2,7 @@ package com.example.storecatalogservice.service;
 
 import com.example.storecatalogservice.model.Product;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -12,7 +13,15 @@ public class ProductInfo {
     @Autowired
     private RestTemplate restTemplate;
 
-    @HystrixCommand(fallbackMethod = "getFallbackProductItem")
+    @HystrixCommand(
+            fallbackMethod = "getFallbackProductItem",
+            threadPoolKey = "storeInfoPool",
+            threadPoolProperties = {
+                    @HystrixProperty(name = "coreSize", value = "20"),
+                    @HystrixProperty(name = "maxQueueSize", value = "10"),
+            }
+
+    )
     public Product getProductItem(Long productId) {
         return restTemplate.getForObject("http://store-information-service/products/" + productId, Product.class);
     }
