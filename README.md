@@ -7,7 +7,7 @@
 ## store-cart-service: https://github.com/vmiinv/cart.git
 ## store-comments-service: https://github.com/L-Law-Liet/store-comment
 ## store-swiftUI Fronten: https://github.com/Alishergit/store-swiftUI.git
-
+## zull-server: https://github.com/Alishergit/zuul-server.git
 
 
 ## store-discovery-server: https://github.com/Alishergit/store-discovery-server.git
