@@ -67,9 +67,16 @@ public class ProductCatalogService {
         List<Product> produtcts = new ArrayList<>();
 
 
-        ResponseEntity<List<Rating>> rateResponse = productListRating.getListRating();
 
-        ResponseEntity<List<Product>> productResponse = productList.getListProduct();
+        ResponseEntity<List<Rating>> rateResponse =
+                restTemplate.exchange("http://store-rating-service/ratings/",
+                        HttpMethod.GET, null, new ParameterizedTypeReference<List<Rating>>() {
+                        });
+
+        ResponseEntity<List<Product>> productResponse =
+                restTemplate.exchange("http://store-information-service/products/",
+                        HttpMethod.GET, null, new ParameterizedTypeReference<List<Product>>() {
+                        });
 
         ratingsList = rateResponse.getBody();
         produtcts = productResponse.getBody();
@@ -83,6 +90,8 @@ public class ProductCatalogService {
                     ratingsList.get(1).getRating(),
                     product.getImageURL()));
         }
+
+
 
         return catalogList;
     }
