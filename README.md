@@ -1,5 +1,8 @@
 # store-catalog-service
 
+# final microservices:
+
+## store-news: https://github.com/Alishergit/store-news.git
 
 ## store-information-service: https://github.com/Alishergit/store-information-service.git
 ## store-rating-service: https://github.com/L-Law-Liet/store-rating
@@ -10,6 +13,7 @@
 ## Desktop Frontend: https://github.com/L-Law-Liet/microservice-client
 ## zull-server: https://github.com/Alishergit/zuul-server.git
 ## auth-service: https://github.com/L-Law-Liet/auth-service
+
 
 
 ## store-discovery-server: https://github.com/Alishergit/store-discovery-server.git
