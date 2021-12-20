@@ -3,6 +3,8 @@
 # final microservices:
 
 ## store-news: https://github.com/Alishergit/store-news.git
+## store-order: https://github.com/L-Law-Liet/order-service
+## store-mailer: https://github.com/vmiinv/mail-microservice
 
 ## store-information-service: https://github.com/Alishergit/store-information-service.git
 ## store-rating-service: https://github.com/L-Law-Liet/store-rating
